@@ -18,27 +18,40 @@ function startGame() {
   initGame.style.display = 'none';
 }
 
+const player = {
+  win(winnerImg, looserImg) {
+    result.innerHTML = 'You win!';
+    document.getElementById('playerPoint').innerHTML = ++playerPoint;
+    imagePlayerChoosed.setAttribute('src', `./assets/${winnerImg}.png`);
+    imageComChoosed.setAttribute('src', `./assets/${looserImg}.png`);
+  },
+
+  loose(winnerImg, looserImg) {
+    result.innerHTML = 'You loose!';
+    document.getElementById('pointCOM').innerHTML = ++pointCOM;
+    imagePlayerChoosed.setAttribute('src', `./assets/${looserImg}.png`);
+    imageComChoosed.setAttribute('src', `./assets/${winnerImg}.png`);
+  },
+
+  draw(imageDraw) {
+    result.innerHTML = 'Draw!';
+    imagePlayerChoosed.setAttribute('src', `./assets/${imageDraw}.png`);
+    imageComChoosed.setAttribute('src', `./assets/${imageDraw}.png`);
+  }
+}
 
 function choosePaper() {
   const index = Math.floor(Math.random() * computerChoose.length);
 
   setTimeout(() => {
     if(computerChoose[index] === computerChoose[1]) {
-      result.innerHTML = 'Draw!';
-      imagePlayerChoosed.setAttribute('src', './assets/paper.png');
-      imageComChoosed.setAttribute('src', './assets/paper.png');
+      player.draw("paper");
 
     } else if(computerChoose[index] === computerChoose[2]) {
-      result.innerHTML = 'You loose!';
-      imagePlayerChoosed.setAttribute('src', './assets/paper.png');
-      imageComChoosed.setAttribute('src', './assets/scissor.png');
-      document.getElementById('pointCOM').innerHTML = ++pointCOM;
+        player.loose("scissor", "paper");
 
     } else {
-      result.innerHTML = 'You win!';
-      document.getElementById('playerPoint').innerHTML = ++playerPoint;
-      imagePlayerChoosed.setAttribute('src', './assets/paper.png');
-      imageComChoosed.setAttribute('src', './assets/rock.png');
+        player.win("paper", "rock");
     }
   }, 1000);
 
@@ -51,21 +64,12 @@ function chooseRock() {
 
   setTimeout(() => {
     if(computerChoose[index] === computerChoose[0]) {
-      result.innerHTML = 'Draw!';
-      imagePlayerChoosed.setAttribute('src', './assets/rock.png');
-      imageComChoosed.setAttribute('src', './assets/rock.png');
+      player.draw("rock");
 
     } else if(computerChoose[index] === computerChoose[1]) {
-      result.innerHTML = 'You loose!';
-      imagePlayerChoosed.setAttribute('src', './assets/rock.png');
-      imageComChoosed.setAttribute('src', './assets/paper.png');
-      document.getElementById('pointCOM').innerHTML = ++pointCOM;
-
+        player.loose("paper", "rock");
     } else {
-      result.innerHTML = 'You win!';
-      imagePlayerChoosed.setAttribute('src', './assets/rock.png');
-      imageComChoosed.setAttribute('src', './assets/scissor.png');
-      document.getElementById('playerPoint').innerHTML = ++playerPoint;
+        player.win("rock", "scissor");
     }
   }, 1000);
 
@@ -77,21 +81,13 @@ function chooseScissor() {
 
   setTimeout(() => {
     if(computerChoose[index] === computerChoose[2]) {
-      result.innerHTML = 'Draw';
-      imagePlayerChoosed.setAttribute('src', './assets/scissor.png');
-      imageComChoosed.setAttribute('src', './assets/scissor.png');
+      player.draw("scissor");
 
     } else if(computerChoose[index] === computerChoose[0]) {
-      result.innerHTML = 'You loose!';
-      imagePlayerChoosed.setAttribute('src', './assets/scissor.png');
-      imageComChoosed.setAttribute('src', './assets/rock.png');
-      document.getElementById('pointCOM').innerHTML = ++pointCOM;
+        player.loose("rock", "scissor");
 
     } else {
-      result.innerHTML = 'You win!';
-      imagePlayerChoosed.setAttribute('src', './assets/scissor.png');
-      imageComChoosed.setAttribute('src', './assets/paper.png');
-      document.getElementById('playerPoint').innerHTML = ++playerPoint;
+        player.win("scissor", "paper");
     }
   }, 1000);
 
